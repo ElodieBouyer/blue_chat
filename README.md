@@ -1,4 +1,6 @@
-blue_chat
+Blue Chat
 =========
 
-Application Android permettant de chater en utilisant la technologie Bluetooth
+## Description 
+
+Application Android permettant de chater en utilisant la technologie Bluetooth.
