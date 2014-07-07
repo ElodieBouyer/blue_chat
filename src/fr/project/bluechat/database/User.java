@@ -1,14 +1,9 @@
 package fr.project.bluechat.database;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.util.Log;
 
 public class User {
@@ -48,7 +43,7 @@ public class User {
 	public String getName() {
 		try {
 			if( name != null ) return name;
-			
+
 			open();
 			Cursor c = this.db.query(
 					USER.TAB_USER,                  
@@ -78,12 +73,12 @@ public class User {
 	 */
 	public void setName(String newName) {
 		if( newName == null) return;
-		
+
 		try {
 			ContentValues values = new ContentValues();
 			delete();
 			name = newName;
-			
+
 			open();
 			values.put(USER.COL_NAME, name);
 			db.insert(USER.TAB_USER, null,values);
@@ -100,7 +95,7 @@ public class User {
 	 */
 	private void delete() {
 		if( name == null ) return;
-		
+
 		try {
 			open();
 			db.delete(USER.TAB_USER, USER.COL_NAME + " LIKE \"" + name + "\"" , null);
