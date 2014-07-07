@@ -5,4 +5,5 @@ import android.bluetooth.BluetoothServerSocket;
 
 public class Bluetooth{
 	private int BluetoothServerSocket;
+	
 }
