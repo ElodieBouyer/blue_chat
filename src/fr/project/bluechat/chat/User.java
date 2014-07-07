@@ -34,10 +34,12 @@ public class User{
 	}	
 	
 	public void connect(){
-		try {
-	        btSocket.connect();
-	 
-	    } catch (IOException e) {}
-			
+		
+		if (btSocket != null) {
+            if(mAdapter.isDiscovering()) {
+            	try {
+            		btSocket.connect();
+            	} catch (IOException e) {}
+            }
 	}
 }
