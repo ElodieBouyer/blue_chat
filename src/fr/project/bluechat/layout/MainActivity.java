@@ -1,5 +1,9 @@
-package fr.project.bluechat;
+package fr.project.bluechat.layout;
 
+import fr.project.bluechat.R;
+import fr.project.bluechat.R.id;
+import fr.project.bluechat.R.layout;
+import fr.project.bluechat.R.menu;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
