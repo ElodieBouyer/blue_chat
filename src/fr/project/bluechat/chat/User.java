@@ -3,9 +3,10 @@ package fr.project.bluechat.chat;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.UUID;
- 
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass.Device;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ public class User{
 	
 	public User(String name){
 		this.name=name;
-		this.btSocket= device.createRfcommSocketToServiceRecord(MY_UUID);
+		//this.btSocket= Device.createRfcommSocketToServiceRecord(1);
 	}
 	
 	public String getName(){
