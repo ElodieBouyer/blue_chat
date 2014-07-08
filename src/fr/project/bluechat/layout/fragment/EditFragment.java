@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import fr.project.bluechat.R;
 
-public class NicknameFragment extends Fragment {
+public class EditFragment extends Fragment {
 
 	private String name;
 
-	public NicknameFragment(String name) {
+	public EditFragment(String name) {
 		super();
 		this.name = name;
 	}
@@ -20,7 +20,7 @@ public class NicknameFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View containerView = inflater.inflate(R.layout.fragment_name, container, false);
+		View containerView = inflater.inflate(R.layout.fragment_edit, container, false);
 		TextView pseudoLabel = (TextView)  containerView.findViewById(R.id.label_name);
 
 		if( name == null ) pseudoLabel.setText(R.string.empty_name);

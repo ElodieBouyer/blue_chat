@@ -36,11 +36,11 @@ public class User{
 	
 	public void connect(){
 		
-		if (btSocket != null) {
+		/*if (btSocket != null) {
             if(mAdapter.isDiscovering()) {
             	try {
             		btSocket.connect();
             	} catch (IOException e) {}
-            }
+            }*/
 	}
 }
