@@ -50,6 +50,7 @@ public class MainActivity extends FragmentActivity {
 		if( text.getText().toString().isEmpty() ) {
 			Toast toast = Toast.makeText(getApplicationContext(), R.string.error_name, Toast.LENGTH_SHORT);
 			toast.show();
+			return;
 		}
 		userDatabse.setName(text.getText().toString());
 		Toast toast = Toast.makeText(getApplicationContext(), R.string.ok_name, Toast.LENGTH_SHORT);
