@@ -5,14 +5,31 @@
     android:gravity="bottom"
     android:orientation="vertical" >
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="top"
+        android:layout_weight="1" >
+
+        
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/table_chat" >
+        </TableLayout> 
+    </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_weight="1"
         android:gravity="bottom"
         android:orientation="horizontal" >
 
         <EditText
+            android:id="@+id/edit_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -28,7 +45,8 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/msg_send"
-            android:src="@drawable/ic_action_send_now" />
+            android:src="@drawable/ic_action_send_now" 
+            android:onClick="sendMessage"/>
     </LinearLayout>
 
 </LinearLayout>

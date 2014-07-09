@@ -2,12 +2,13 @@ package fr.project.bluechat.layout.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
+import android.widget.TableLayout;
 import android.widget.Toast;
 import fr.project.bluechat.R;
 import fr.project.bluechat.database.User;
@@ -22,12 +23,13 @@ public class MainActivity extends FragmentActivity {
 	private User userDatabse;
 	private int position = CHAT;
 	private Menu menu = null;
+	private ChatFragment chatFragment = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		userDatabse = new User(getApplicationContext());
 
 		if (savedInstanceState == null) {
@@ -59,6 +61,15 @@ public class MainActivity extends FragmentActivity {
 		openFragmentChat();
 	}
 
+	public void sendMessage(View v) {
+		EditText newMessage = (EditText) findViewById(R.id.edit_message);
+		if( newMessage.getText().toString().isEmpty()) {
+			Toast toast = Toast.makeText(getApplicationContext(), R.string.error_message, Toast.LENGTH_SHORT);
+			toast.show();
+			return;
+		}
+		chatFragment.writeUserMessage(userDatabse.getName(), newMessage.getText().toString());
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu m) {
@@ -105,8 +116,14 @@ public class MainActivity extends FragmentActivity {
 	 */
 	private void openFragmentChat() {
 		position = CHAT;
+		if(chatFragment == null) {
+			Log.i("BOUH", "nuuuul");
+			chatFragment = new ChatFragment();
+		}
+
 		getSupportFragmentManager().beginTransaction()
-		.replace(R.id.container, new ChatFragment()).commit();
+		.replace(R.id.container, chatFragment).commit();
+
 		onCreateOptionsMenu(menu);
 	}
 
@@ -119,4 +136,6 @@ public class MainActivity extends FragmentActivity {
 		.replace(R.id.container, new EditFragment(userDatabse.getName())).commit();
 		onCreateOptionsMenu(menu);
 	}
+
+
 }

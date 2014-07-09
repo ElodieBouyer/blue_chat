@@ -9,6 +9,7 @@
     <string name="edit_name"> Vous voulez changer votre pseudo ?</string>
     <string name="new_name"> Nouveau pseudo </string>
     <string name="error_name"> Vous devez entrez un pseudo !</string>
+    <string name="error_message"> Vous ne pouvez pas envoyer de message vide !</string>
 	<string name="ok_name"> Pseudo enregistré </string>
 	<string name="msg_write"> Entrez votre message </string>
 	<string name="msg_send"> Envoyer le message</string>
