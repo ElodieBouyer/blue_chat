@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TableLayout;
 import android.widget.Toast;
 import fr.project.bluechat.R;
 import fr.project.bluechat.database.User;
@@ -40,35 +39,6 @@ public class MainActivity extends FragmentActivity {
 				openFragmentChat();
 			}
 		} 
-	}
-
-	/**
-	 * Called when the user adds his nickname. 
-	 * @param v Button add.
-	 */
-	public void newName(View v) {
-		EditText text = (EditText) findViewById(R.id.edit_name);
-
-		if( text.getText().toString().isEmpty() ) {
-			Toast toast = Toast.makeText(getApplicationContext(), R.string.error_name, Toast.LENGTH_SHORT);
-			toast.show();
-			return;
-		}
-		userDatabse.setName(text.getText().toString());
-		Toast toast = Toast.makeText(getApplicationContext(), R.string.ok_name, Toast.LENGTH_SHORT);
-		toast.show();
-
-		openFragmentChat();
-	}
-
-	public void sendMessage(View v) {
-		EditText newMessage = (EditText) findViewById(R.id.edit_message);
-		if( newMessage.getText().toString().isEmpty()) {
-			Toast toast = Toast.makeText(getApplicationContext(), R.string.error_message, Toast.LENGTH_SHORT);
-			toast.show();
-			return;
-		}
-		chatFragment.writeUserMessage(userDatabse.getName(), newMessage.getText().toString());
 	}
 
 	@Override
@@ -109,6 +79,65 @@ public class MainActivity extends FragmentActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+	}
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		openFragmentChat();
+	}
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
+
+	/**
+	 * Called when the user adds his nickname. 
+	 * @param v Button to add.
+	 */
+	public void newName(View v) {
+		EditText text = (EditText) findViewById(R.id.edit_name);
+
+		if( text.getText().toString().isEmpty() ) {
+			Toast toast = Toast.makeText(getApplicationContext(), R.string.error_name, Toast.LENGTH_SHORT);
+			toast.show();
+			return;
+		}
+		userDatabse.setName(text.getText().toString());
+		Toast toast = Toast.makeText(getApplicationContext(), R.string.ok_name, Toast.LENGTH_SHORT);
+		toast.show();
+
+		openFragmentChat();
+	}
+
+	/**
+	 * Called when the user want to send a message.
+	 * @param v Button to send.
+	 */
+	public void sendMessage(View v) {
+		EditText newMessage = (EditText) findViewById(R.id.edit_message);
+		if( newMessage.getText().toString().isEmpty()) {
+			Toast toast = Toast.makeText(getApplicationContext(), R.string.error_message, Toast.LENGTH_SHORT);
+			toast.show();
+			return;
+		}
+		chatFragment.writeUserMessage(userDatabse.getName(), newMessage.getText().toString());
 	}
 
 	/**
