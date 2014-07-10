@@ -9,23 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_weight="100"
+        android:fadeScrollbars="false"
         android:gravity="top"
-        android:layout_weight="1" >
+        android:scrollbars="vertical" >
 
-        
         <LinearLayout
+            android:id="@+id/table_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/table_chat" 
-            android:orientation="vertical">
-        </LinearLayout> 
+            android:orientation="vertical" >
+        </LinearLayout>
     </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_weight="1"
         android:gravity="bottom"
         android:orientation="horizontal" >
 
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="1"
+            android:layout_weight="50"
             android:hint="@string/msg_write"
             android:inputType="textMultiLine"
             android:text="" />
@@ -43,11 +43,11 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="50"
             android:background="@android:color/transparent"
             android:contentDescription="@string/msg_send"
-            android:src="@drawable/ic_action_send_now" 
-            android:onClick="sendMessage"/>
+            android:onClick="sendMessage"
+            android:src="@drawable/ic_action_send_now" />
     </LinearLayout>
 
 </LinearLayout>
