@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import fr.project.bluechat.R;
 import fr.project.bluechat.database.User;
@@ -143,16 +144,15 @@ public class MainActivity extends FragmentActivity {
 	/**
 	 * Open the chat fragment.
 	 */
-	private void openFragmentChat() {
+	public void openFragmentChat() {
 		position = CHAT;
 		if(chatFragment == null) {
-			Log.i("BOUH", "nuuuul");
 			chatFragment = new ChatFragment();
 		}
-
+		
 		getSupportFragmentManager().beginTransaction()
 		.replace(R.id.container, chatFragment).commit();
-
+		
 		onCreateOptionsMenu(menu);
 	}
 

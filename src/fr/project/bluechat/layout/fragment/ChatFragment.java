@@ -6,21 +6,23 @@ import java.util.List;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import fr.project.bluechat.R;
 import fr.project.bluechat.database.Messages;
+import fr.project.bluechat.layout.activity.MainActivity;
 
 public class ChatFragment extends Fragment {
 
 	private TableLayout tableChat = null;
+	private LinearLayout layoutChat = null;
 	private EditText editMessage = null;
 	private List<Messages> messages;
 
@@ -31,16 +33,16 @@ public class ChatFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		if( tableChat == null ) Log.i("BOUH", "sniiif");
 		View containerView = inflater.inflate(R.layout.fragment_chat, container, false);
-		tableChat = (TableLayout) containerView.findViewById(R.id.table_chat);
-		editMessage = (EditText) containerView.findViewById(R.id.edit_message);
-		
-		if( messages == null ) messages = new ArrayList<Messages>();
-		
-		for(Messages msg : messages) {
-			writeUserMessage(msg.getNickname(), msg.getMessages());
+
+		if( tableChat == null ) tableChat = new TableLayout(getActivity().getApplicationContext());
+		if( messages == null )  messages = new ArrayList<Messages>();
+		if( layoutChat == null) {
+			layoutChat = (LinearLayout) containerView.findViewById(R.id.table_chat);
+			layoutChat.addView(tableChat);
 		}
+		
+		editMessage = (EditText) containerView.findViewById(R.id.edit_message);
 		
 		return containerView;
 	}
@@ -74,6 +76,7 @@ public class ChatFragment extends Fragment {
 
 		tableChat.addView(row);
 		editMessage.getText().clear();
+		((MainActivity) getActivity()).openFragmentChat();
 	}
 
 }

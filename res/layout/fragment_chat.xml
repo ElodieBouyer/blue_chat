@@ -13,11 +13,12 @@
         android:layout_weight="1" >
 
         
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/table_chat" >
-        </TableLayout> 
+            android:id="@+id/table_chat" 
+            android:orientation="vertical">
+        </LinearLayout> 
     </ScrollView>
 
     <LinearLayout
