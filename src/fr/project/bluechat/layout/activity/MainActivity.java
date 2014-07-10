@@ -149,10 +149,15 @@ public class MainActivity extends FragmentActivity {
 		if(chatFragment == null) {
 			chatFragment = new ChatFragment();
 		}
+		else getSupportFragmentManager().beginTransaction().remove(chatFragment);
 		
-		getSupportFragmentManager().beginTransaction()
-		.replace(R.id.container, chatFragment).commit();
-		
+		try {
+			getSupportFragmentManager().beginTransaction()
+			.replace(R.id.container, chatFragment).commit();
+		}
+		catch(Exception e) {
+			Log.i("Error", e.getMessage());
+		}
 		onCreateOptionsMenu(menu);
 	}
 

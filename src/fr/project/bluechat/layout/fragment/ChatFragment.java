@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,8 @@ public class ChatFragment extends Fragment {
 	private TableLayout tableChat = null;
 	private LinearLayout layoutChat = null;
 	private EditText editMessage = null;
-	private List<Messages> messages;
+	private List<Messages> messages = new ArrayList<Messages>();;
+	private View containerView = null;
 
 	public ChatFragment() {
 		super();
@@ -32,19 +34,39 @@ public class ChatFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		Log.i("BOUH", "Demande fragment.");
 
-		View containerView = inflater.inflate(R.layout.fragment_chat, container, false);
+		// The container view.
+		containerView = inflater.inflate(R.layout.fragment_chat, container, false);
 
-		if( tableChat == null ) tableChat = new TableLayout(getActivity().getApplicationContext());
-		if( messages == null )  messages = new ArrayList<Messages>();
-		if( layoutChat == null) {
-			layoutChat = (LinearLayout) containerView.findViewById(R.id.table_chat);
-			layoutChat.addView(tableChat);
-		}
-		
+		// The edit text.
 		editMessage = (EditText) containerView.findViewById(R.id.edit_message);
-		
+
+		TableLayout aux = new TableLayout(getActivity().getApplicationContext());
+		// The table layout.
+		if( tableChat != null && tableChat.getChildCount() != 0) {
+			Log.i("chatFragment", "nb ligne = " + tableChat.getChildCount());
+			for( int i = tableChat.getChildCount()-1 ; i >= 0  ; i--) {
+				Log.i("chatFragment", "Ligne = " + i);
+				TableRow row = (TableRow) tableChat.getChildAt(i);
+				tableChat.removeViewAt(i);
+				aux.addView(row);
+			}
+
+		}
+		tableChat = aux;
+		aux = null;
+		// The chat layout.
+		layoutChat = (LinearLayout) containerView.findViewById(R.id.table_chat);
+		layoutChat.addView(tableChat);
+
 		return containerView;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		Log.i("BOUH", "re.");
 	}
 
 	public TableLayout getTableChat() {
@@ -76,7 +98,6 @@ public class ChatFragment extends Fragment {
 
 		tableChat.addView(row);
 		editMessage.getText().clear();
-		((MainActivity) getActivity()).openFragmentChat();
 	}
 
 }
