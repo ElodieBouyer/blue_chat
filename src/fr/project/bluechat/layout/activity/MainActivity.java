@@ -1,5 +1,8 @@
 package fr.project.bluechat.layout.activity;
 
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -8,35 +11,41 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 import fr.project.bluechat.R;
-import fr.project.bluechat.database.User;
 import fr.project.bluechat.layout.fragment.ChatFragment;
 import fr.project.bluechat.layout.fragment.EditFragment;
 
 public class MainActivity extends FragmentActivity {
 
+	public static final String NICKNAME = "myNickname";
+
 	private final int CHAT = 0;
 	private final int EDIT = 1;
 
-	private User userDatabse;
 	private int position = CHAT;
 	private Menu menu = null;
 	private ChatFragment chatFragment = null;
+	private String userName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		userDatabse = new User(getApplicationContext());
+		// To read preferences to get the user's name.
+		SharedPreferences settings = getSharedPreferences(NICKNAME, Context.MODE_PRIVATE);
+		String nickname = settings.getString(NICKNAME, new String());
 
+		Log.i("BlueChat.MainActivity", "onCreate");
+		
 		if (savedInstanceState == null) {
-			if( userDatabse.getName() == null ) { // We open the PseudoFragment.
+			if( nickname.isEmpty()  ) { // We open the PseudoFragment.
+				Log.i("BlueChat.MainActivity", "Nickname =" + nickname.length() + ".");
 				openFragmentNickname();
 			}
 			else { // We open the chat fragment.
+				userName = nickname;
 				openFragmentChat();
 			}
 		} 
@@ -93,7 +102,6 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		openFragmentChat();
 	}
 	@Override
 	protected void onPause() {
@@ -120,7 +128,14 @@ public class MainActivity extends FragmentActivity {
 			toast.show();
 			return;
 		}
-		userDatabse.setName(text.getText().toString());
+		userName = text.getText().toString();
+		
+		// Edit share preferences to store the new name.
+		SharedPreferences settings = getSharedPreferences(NICKNAME, Context.MODE_PRIVATE);
+		settings.edit().putString(NICKNAME,userName).apply();
+		
+
+		// To display a text message for user.
 		Toast toast = Toast.makeText(getApplicationContext(), R.string.ok_name, Toast.LENGTH_SHORT);
 		toast.show();
 
@@ -138,7 +153,7 @@ public class MainActivity extends FragmentActivity {
 			toast.show();
 			return;
 		}
-		chatFragment.writeUserMessage(userDatabse.getName(), newMessage.getText().toString());
+		chatFragment.writeUserMessage(userName, newMessage.getText().toString());
 	}
 
 	/**
@@ -150,7 +165,7 @@ public class MainActivity extends FragmentActivity {
 			chatFragment = new ChatFragment();
 		}
 		else getSupportFragmentManager().beginTransaction().remove(chatFragment);
-		
+
 		try {
 			getSupportFragmentManager().beginTransaction()
 			.replace(R.id.container, chatFragment).commit();
@@ -166,8 +181,9 @@ public class MainActivity extends FragmentActivity {
 	 */
 	private void openFragmentNickname() {
 		position = EDIT;
+		Log.i("BlueChat.MainActivity", "openFragmentNickname()");
 		getSupportFragmentManager().beginTransaction()
-		.replace(R.id.container, new EditFragment(userDatabse.getName())).commit();
+		.replace(R.id.container, new EditFragment(userName)).commit();
 		onCreateOptionsMenu(menu);
 	}
 

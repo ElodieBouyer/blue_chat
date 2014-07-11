@@ -1,8 +1,5 @@
 package fr.project.bluechat.layout.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,15 +14,12 @@ import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import fr.project.bluechat.R;
-import fr.project.bluechat.database.Messages;
-import fr.project.bluechat.layout.activity.MainActivity;
 
 public class ChatFragment extends Fragment {
 
 	private TableLayout tableChat = null;
 	private LinearLayout layoutChat = null;
 	private EditText editMessage = null;
-	private List<Messages> messages = new ArrayList<Messages>();;
 	private View containerView = null;
 
 	public ChatFragment() {
@@ -34,7 +28,7 @@ public class ChatFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Log.i("BOUH", "Demande fragment.");
+		Log.i("BlueChat.ChatFragment", "onCreateView");
 
 		// The container view.
 		containerView = inflater.inflate(R.layout.fragment_chat, container, false);
@@ -78,7 +72,6 @@ public class ChatFragment extends Fragment {
 	}
 
 	public void writeUserMessage(String nickname, String message) {
-		messages.add(new Messages(nickname, message));
 		Context context = getActivity().getApplicationContext();
 		TableRow row          = new TableRow(context);
 		TextView nicknameView = new TextView(context);

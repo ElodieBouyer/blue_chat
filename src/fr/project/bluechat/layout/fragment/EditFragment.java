@@ -2,6 +2,7 @@ package fr.project.bluechat.layout.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class EditFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
+		Log.i("BlueChat.EditFragment", "onCreateView");
 		View containerView = inflater.inflate(R.layout.fragment_edit, container, false);
 		TextView pseudoLabel = (TextView)  containerView.findViewById(R.id.label_name);
 
