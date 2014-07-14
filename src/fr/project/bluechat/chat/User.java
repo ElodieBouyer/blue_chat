@@ -16,10 +16,10 @@ public class User{
 	
 	private String name = null;
 	private BluetoothSocket btSocket =null; 
-	
+	private BluetoothAdapter mAdapter= BluetoothAdapter.getDefaultAdapter();
 	public User(String name){
 		this.name=name;
-		//this.btSocket= Device.createRfcommSocketToServiceRecord(1);
+	
 	}
 	
 	public String getName(){
@@ -36,11 +36,12 @@ public class User{
 	
 	public void connect(){
 		
-		/*if (btSocket != null) {
+		if (btSocket != null) {
             if(mAdapter.isDiscovering()) {
             	try {
             		btSocket.connect();
             	} catch (IOException e) {}
-            }*/
+            }
+		}
 	}
 }
