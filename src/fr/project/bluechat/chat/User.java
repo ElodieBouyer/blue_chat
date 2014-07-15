@@ -4,16 +4,23 @@ import java.io.IOException;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 
 
-public class User{
+public class User {
+
+	private final int REQUEST_ENABLE_BT = 0;
 
 	private String name = null;
+	FragmentActivity mActivity;
 	private BluetoothSocket btSocket =null; 
-	private BluetoothAdapter mAdapter= BluetoothAdapter.getDefaultAdapter();
-	public User(String name){
-		this.name=name;
+	private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
+
+	public User(FragmentActivity activity, String name) {
+		mActivity = activity;
+		this.name=name;
 	}
 
 	public String getName(){
@@ -26,16 +33,29 @@ public class User{
 
 	public void sendMessage(String name, String message){
 
-	}	
+	}
 
-	public void connect(){
-
+	public void connect() {
 		if (btSocket != null) {
-			if(mAdapter.isDiscovering()) {
+			if(mBluetoothAdapter.isDiscovering()) {
 				try {
 					btSocket.connect();
 				} catch (IOException e) {}
 			}
 		}
+	}
+	
+	/**
+	 * Start the Bluetooth.
+	 * @return True if Bluetooth is connect, false otherwise.
+	 */
+	public boolean start() {
+		if( mBluetoothAdapter == null ) return false; // Device does not support Bluetooth.
+
+		if( !mBluetoothAdapter.isEnabled() ) {
+			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			mActivity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+		}
+		return true;
 	}
 }
