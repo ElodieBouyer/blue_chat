@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Blue Chat</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_edit"> Modifier le pseudo </string>
+    <string name="action_back"> Retour au Chat </string>
+    <string name="empty_name"> Vous n\'avez pas de pseudo ! \n Ajoutez en un !</string>
+    <string name="edit_name"> Vous voulez changer votre pseudo ?</string>
+    <string name="new_name"> Nouveau pseudo </string>
+    <string name="error_name"> Vous devez entrez un pseudo !</string>
+    <string name="error_message"> Vous ne pouvez pas envoyer de message vide !</string>
+	<string name="ok_name"> Pseudo enregistré </string>
+	<string name="msg_write"> Entrez votre message </string>
+	<string name="msg_send"> Envoyer le message</string>
+	<string name="msg_sent"> Message envoyé</string>
+</resources>
