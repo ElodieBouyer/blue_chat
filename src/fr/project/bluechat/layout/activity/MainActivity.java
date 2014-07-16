@@ -1,7 +1,9 @@
 package fr.project.bluechat.layout.activity;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import fr.project.bluechat.R;
+import fr.project.bluechat.chat.User;
 import fr.project.bluechat.layout.fragment.ChatFragment;
 import fr.project.bluechat.layout.fragment.EditFragment;
 
@@ -27,6 +30,7 @@ public class MainActivity extends FragmentActivity {
 	private Menu menu = null;
 	private ChatFragment chatFragment = null;
 	private String userName;
+	private User mBluetooch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,9 @@ public class MainActivity extends FragmentActivity {
 
 		Log.i("BlueChat.MainActivity", "onCreate");
 		
+		mBluetooch = new User(this, userName);
+		mBluetooch.start();
+		
 		if (savedInstanceState == null) {
 			if( nickname.isEmpty()  ) { // We open the PseudoFragment.
 				Log.i("BlueChat.MainActivity", "Nickname =" + nickname.length() + ".");
@@ -46,6 +53,7 @@ public class MainActivity extends FragmentActivity {
 			}
 			else { // We open the chat fragment.
 				userName = nickname;
+				mBluetooch.SetName(userName);
 				openFragmentChat();
 			}
 		} 
@@ -115,7 +123,6 @@ public class MainActivity extends FragmentActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 	}
-<<<<<<< HEAD
 	
 	@Override
 	protected void onActivityResult (int requestCode, int resultCode, Intent data) {
@@ -126,8 +133,6 @@ public class MainActivity extends FragmentActivity {
 			Log.i("MainActivity", "Bluetooth n'a pas été activé.");
 		}
 	}
-=======
->>>>>>> parent of 1de0ef6... Add User.Start() to start the bluetooth.
 
 	/**
 	 * Called when the user adds his nickname. 
@@ -142,6 +147,7 @@ public class MainActivity extends FragmentActivity {
 			return;
 		}
 		userName = text.getText().toString();
+		mBluetooch.SetName(userName);
 		
 		// Edit share preferences to store the new name.
 		SharedPreferences settings = getSharedPreferences(NICKNAME, Context.MODE_PRIVATE);
@@ -189,6 +195,7 @@ public class MainActivity extends FragmentActivity {
 			Log.i("Error", e.getMessage());
 		}
 		onCreateOptionsMenu(menu);
+		
 	}
 
 	/**
