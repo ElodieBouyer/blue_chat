@@ -127,10 +127,10 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onActivityResult (int requestCode, int resultCode, Intent data) {
 		if( resultCode == Activity.RESULT_OK ) {
-			
+			Log.i("MainActivity", "Le Bluetooth a été activé.");
 		}
 		else if( resultCode == Activity.RESULT_CANCELED) {
-			
+			Log.i("MainActivity", "Bluetooth n'a pas été activé.");
 		}
 	}
 
@@ -167,12 +167,14 @@ public class MainActivity extends FragmentActivity {
 	 */
 	public void sendMessage(View v) {
 		EditText newMessage = (EditText) findViewById(R.id.edit_message);
-		if( newMessage.getText().toString().isEmpty()) {
+		String message = newMessage.getText().toString();
+		if( message.isEmpty()) {
 			Toast toast = Toast.makeText(getApplicationContext(), R.string.error_message, Toast.LENGTH_SHORT);
 			toast.show();
 			return;
 		}
-		chatFragment.writeUserMessage(userName, newMessage.getText().toString());
+		chatFragment.writeUserMessage(userName, message);
+		mBluetooch.sendMessage(userName, message);
 	}
 
 	/**
