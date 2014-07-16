@@ -42,10 +42,10 @@ public class MainActivity extends FragmentActivity {
 		String nickname = settings.getString(NICKNAME, new String());
 
 		Log.i("BlueChat.MainActivity", "onCreate");
-		
+
 		mBluetooch = new User(this, userName);
 		mBluetooch.start();
-		
+
 		if (savedInstanceState == null) {
 			if( nickname.isEmpty()  ) { // We open the PseudoFragment.
 				Log.i("BlueChat.MainActivity", "Nickname =" + nickname.length() + ".");
@@ -123,21 +123,14 @@ public class MainActivity extends FragmentActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 	}
-	
+
 	@Override
 	protected void onActivityResult (int requestCode, int resultCode, Intent data) {
 		if( resultCode == Activity.RESULT_OK ) {
-<<<<<<< HEAD
 			Log.i("MainActivity", "Le Bluetooth a été activé.");
 		}
 		else if( resultCode == Activity.RESULT_CANCELED) {
-			Log.i("MainActivity", "Bluetooth n'a pas été activé.");
-=======
-			
-		}
-		else if( resultCode == Activity.RESULT_CANCELED) {
-			
->>>>>>> parent of 579cf20... add brodcast receiver
+			Log.i("MainActivity", "Bluetooth n'a pas été activé.");	
 		}
 	}
 
@@ -155,11 +148,11 @@ public class MainActivity extends FragmentActivity {
 		}
 		userName = text.getText().toString();
 		mBluetooch.SetName(userName);
-		
+
 		// Edit share preferences to store the new name.
 		SharedPreferences settings = getSharedPreferences(NICKNAME, Context.MODE_PRIVATE);
 		settings.edit().putString(NICKNAME,userName).apply();
-		
+
 
 		// To display a text message for user.
 		Toast toast = Toast.makeText(getApplicationContext(), R.string.ok_name, Toast.LENGTH_SHORT);
@@ -174,22 +167,15 @@ public class MainActivity extends FragmentActivity {
 	 */
 	public void sendMessage(View v) {
 		EditText newMessage = (EditText) findViewById(R.id.edit_message);
-<<<<<<< HEAD
 		String message = newMessage.getText().toString();
 		if( message.isEmpty()) {
-=======
-		if( newMessage.getText().toString().isEmpty()) {
->>>>>>> parent of 579cf20... add brodcast receiver
+
 			Toast toast = Toast.makeText(getApplicationContext(), R.string.error_message, Toast.LENGTH_SHORT);
 			toast.show();
 			return;
 		}
-<<<<<<< HEAD
 		chatFragment.writeUserMessage(userName, message);
 		mBluetooch.sendMessage(userName, message);
-=======
-		chatFragment.writeUserMessage(userName, newMessage.getText().toString());
->>>>>>> parent of 579cf20... add brodcast receiver
 	}
 
 	/**
@@ -210,7 +196,7 @@ public class MainActivity extends FragmentActivity {
 			Log.i("Error", e.getMessage());
 		}
 		onCreateOptionsMenu(menu);
-		
+
 	}
 
 	/**
