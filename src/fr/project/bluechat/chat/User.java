@@ -1,22 +1,28 @@
 package fr.project.bluechat.chat;
 
 import java.io.IOException;
+import java.lang.Object;
 
+import android.R;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
-
+import android.widget.BaseAdapter;
 
 public class User {
 
 	private final int REQUEST_ENABLE_BT = 0;
-
+	
+	
 	private String name = null;
 	FragmentActivity mActivity;
 	private BluetoothSocket btSocket =null; 
 	private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
+	
 
 	public User(FragmentActivity activity, String name) {
 		mActivity = activity;
@@ -30,11 +36,27 @@ public class User {
 	public void SetName(String name){
 		this.name=name;
 	}
-
+	
+	private final BroadcastReceiver mReceiver = new BroadcastReceiver(){
+	public void onReceive(Context context, Intent intent){
+	String action = intent.getAction();
+		if (BluetoothDevice.ACTION_FOUND.equals(action)){
+			BluetoothDevice device= intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+		}
+		}
+	};
+	
+	
+	
 	public void sendMessage(String name, String message){
 
 	}
 
+	public void receiverMessage(String name, String message){
+	
+	}
+	
+	
 	public void connect() {
 		if (btSocket != null) {
 			if(mBluetoothAdapter.isDiscovering()) {
