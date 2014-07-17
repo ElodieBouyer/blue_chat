@@ -35,13 +35,13 @@ public class Bluetooth {
 
 			public void onReceive(Context context, Intent intent) {
 				String action = intent.getAction();
-				Log.i("BlueChat.Bluetooth", action);
+				Log.i("BlueChat", action);
 
 				// When discovery finds a device
 				if (BluetoothDevice.ACTION_FOUND.equals(action)) {
 					BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 					mDevides.add(device);
-					Log.i("BlueChat.Bluetooth", device.getName() + "\n" + device.getAddress());
+					Log.i("BlueChat", device.getName() + "\n" + device.getAddress());
 				}
 			}
 		};

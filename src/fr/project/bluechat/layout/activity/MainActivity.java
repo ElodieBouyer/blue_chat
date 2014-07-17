@@ -41,14 +41,14 @@ public class MainActivity extends FragmentActivity {
 		SharedPreferences settings = getSharedPreferences(NICKNAME, Context.MODE_PRIVATE);
 		String nickname = settings.getString(NICKNAME, new String());
 
-		Log.i("BlueChat.MainActivity", "onCreate");
+		Log.i("BlueChat", "onCreate");
 
 		mBluetooch = new Bluetooth(this);
 		mBluetooch.start();
 
 		if (savedInstanceState == null) {
 			if( nickname.isEmpty()  ) { // We open the PseudoFragment.
-				Log.i("BlueChat.MainActivity", "Nickname =" + nickname.length() + ".");
+				Log.i("BlueChat", "Nickname =" + nickname.length() + ".");
 				openFragmentNickname();
 			}
 			else { // We open the chat fragment.
@@ -129,11 +129,11 @@ public class MainActivity extends FragmentActivity {
 		Log.i("BlueChat.MainActivity", "onActivityResult");
 		
 		if( resultCode == Activity.RESULT_OK ) {
-			Log.i("BlueChat.MainActivity", "Le Bluetooth a été activé.");
+			Log.i("BlueChat", "Le Bluetooth a été activé.");
 			mBluetooch.findingDevices();
 		}
 		else if( resultCode == Activity.RESULT_CANCELED) {
-			Log.i("BlueChat.MainActivity", "Bluetooth n'a pas été activé.");	
+			Log.i("BlueChat", "Bluetooth n'a pas été activé.");	
 		}
 	}
 
@@ -207,7 +207,7 @@ public class MainActivity extends FragmentActivity {
 	 */
 	private void openFragmentNickname() {
 		position = EDIT;
-		Log.i("BlueChat.MainActivity", "openFragmentNickname()");
+		Log.i("BlueChat", "openFragmentNickname()");
 		getSupportFragmentManager().beginTransaction()
 		.replace(R.id.container, new EditFragment(userName)).commit();
 		onCreateOptionsMenu(menu);
