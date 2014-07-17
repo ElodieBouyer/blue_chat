@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import fr.project.bluechat.R;
-import fr.project.bluechat.chat.User;
+import fr.project.bluechat.chat.Bluetooth;
 import fr.project.bluechat.layout.fragment.ChatFragment;
 import fr.project.bluechat.layout.fragment.EditFragment;
 
@@ -30,7 +30,7 @@ public class MainActivity extends FragmentActivity {
 	private Menu menu = null;
 	private ChatFragment chatFragment = null;
 	private String userName;
-	private User mBluetooch;
+	private Bluetooth mBluetooch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class MainActivity extends FragmentActivity {
 
 		Log.i("BlueChat.MainActivity", "onCreate");
 
-		mBluetooch = new User(this, userName);
+		mBluetooch = new Bluetooth(this);
 		mBluetooch.start();
 
 		if (savedInstanceState == null) {
@@ -53,7 +53,6 @@ public class MainActivity extends FragmentActivity {
 			}
 			else { // We open the chat fragment.
 				userName = nickname;
-				mBluetooch.SetName(userName);
 				openFragmentChat();
 			}
 		} 
@@ -134,6 +133,7 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
+
 	/**
 	 * Called when the user adds his nickname. 
 	 * @param v Button to add.
@@ -147,7 +147,6 @@ public class MainActivity extends FragmentActivity {
 			return;
 		}
 		userName = text.getText().toString();
-		mBluetooch.SetName(userName);
 
 		// Edit share preferences to store the new name.
 		SharedPreferences settings = getSharedPreferences(NICKNAME, Context.MODE_PRIVATE);
