@@ -121,15 +121,19 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		mBluetooch.destroy();
 	}
 
 	@Override
 	protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+		Log.i("BlueChat.MainActivity", "onActivityResult");
+		
 		if( resultCode == Activity.RESULT_OK ) {
-			Log.i("MainActivity", "Le Bluetooth a été activé.");
+			Log.i("BlueChat.MainActivity", "Le Bluetooth a été activé.");
+			mBluetooch.findingDevices();
 		}
 		else if( resultCode == Activity.RESULT_CANCELED) {
-			Log.i("MainActivity", "Bluetooth n'a pas été activé.");	
+			Log.i("BlueChat.MainActivity", "Bluetooth n'a pas été activé.");	
 		}
 	}
 

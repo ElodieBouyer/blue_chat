@@ -47,6 +47,9 @@ public class Bluetooth {
 		};
 
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+		//filter.addAction(BluetoothDevice.ACTION_UUID);
+		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 		mActivity.registerReceiver(mReceiver, filter);
 	}
 
@@ -63,26 +66,39 @@ public class Bluetooth {
 			Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 			discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
 
-			mActivity.startActivity(discoverableIntent);
+			mActivity.startActivityForResult(discoverableIntent, 0);
 		}
-		findingDevices();
+		else findingDevices();
+		
 		return true;
 	}
 
 	/**
 	 * Use the BluetoothAdapter to find remote Bluetooth devices.
 	 */
-	private void findingDevices() {
+	public void findingDevices() {
+		Log.i("BlueChat", "findingDevies.");
 		mBluetoothAdapter.startDiscovery();
 	}
 
 
 	public void sendMessage(String name, String message){
-		findingDevices();
+
 	}
 
 	public void receiverMessage(String name, String message){
 
+	}
+
+	/**
+	 * Clear bluetooth variable.
+	 * Called by MainActivity.
+	 */
+	public void destroy() {
+		if( mBluetoothAdapter != null) {
+			mBluetoothAdapter.cancelDiscovery();
+		}
+		mActivity.unregisterReceiver(mReceiver);
 	}
 
 	public void connect() {
