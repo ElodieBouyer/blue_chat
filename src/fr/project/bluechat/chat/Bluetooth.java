@@ -77,7 +77,7 @@ public class Bluetooth {
 	 * Use the BluetoothAdapter to find remote Bluetooth devices.
 	 */
 	public void findingDevices() {
-		Log.i("BlueChat", "findingDevies.");
+		Log.i("BlueChat", "findingDevices.");
 		mBluetoothAdapter.startDiscovery();
 	}
 
