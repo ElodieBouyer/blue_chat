@@ -1,6 +1,6 @@
 package fr.project.bluechat.chat;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 
 import android.bluetooth.BluetoothAdapter;
@@ -18,7 +18,6 @@ public class Bluetooth {
 	private static final int BLUETOOTH_ENABLE = 0;
 
 	private MainActivity mActivity;
-	private BluetoothSocket btSocket =null; 
 	private BluetoothAdapter mBluetoothAdapter;
 	private ArrayList<BluetoothDevice> mDevides = new ArrayList<BluetoothDevice>();
 
@@ -47,9 +46,6 @@ public class Bluetooth {
 		};
 
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-		//filter.addAction(BluetoothDevice.ACTION_UUID);
-		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 		mActivity.registerReceiver(mReceiver, filter);
 	}
 
@@ -80,11 +76,23 @@ public class Bluetooth {
 	}
 
 
+	public BluetoothAdapter getBluetoothAdapter() {
+		return mBluetoothAdapter;
+	}
+
 	public void sendMessage(String name, String message){
 
 	}
 
 	public void receiverMessage(String name, String message){
+
+	}
+
+	/**
+	 * Called by server thread.
+	 * @param socket Bluetooth socket for the communication.
+	 */
+	public void connect(BluetoothSocket socket) {
 
 	}
 
@@ -98,15 +106,5 @@ public class Bluetooth {
 		}
 		mActivity.unregisterReceiver(mReceiver);
 		mBluetoothAdapter.disable();
-	}
-
-	public void connect() {
-		if (btSocket != null) {
-			if(mBluetoothAdapter.isDiscovering()) {
-				try {
-					btSocket.connect();
-				} catch (IOException e) {}
-			}
-		}
 	}
 }
