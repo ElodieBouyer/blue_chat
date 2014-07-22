@@ -15,13 +15,14 @@ import fr.project.bluechat.layout.activity.MainActivity;
 
 public class Bluetooth {
 
+	private static final int BLUETOOTH_ENABLE = 0;
+
 	private MainActivity mActivity;
 	private BluetoothSocket btSocket =null; 
 	private BluetoothAdapter mBluetoothAdapter;
 	private ArrayList<BluetoothDevice> mDevides = new ArrayList<BluetoothDevice>();
 
 	private final BroadcastReceiver mReceiver;
-
 
 	/**
 	 * Bluetooth class constructor.
@@ -31,17 +32,16 @@ public class Bluetooth {
 		mActivity = activity;
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-		mReceiver = new BroadcastReceiver() { // Create a BroadcastReceiver for ACTION_FOUND
+		mReceiver = new BroadcastReceiver() {
 
 			public void onReceive(Context context, Intent intent) {
 				String action = intent.getAction();
-				Log.i("BlueChat", action);
 
 				// When discovery finds a device
 				if (BluetoothDevice.ACTION_FOUND.equals(action)) {
 					BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 					mDevides.add(device);
-					Log.i("BlueChat", device.getName() + "\n" + device.getAddress());
+					Log.i("BlueChat.Bluetooth.onReceive()", device.getName() + "\n" + device.getAddress());
 				}
 			}
 		};
@@ -60,16 +60,14 @@ public class Bluetooth {
 	public boolean start() {
 		if( mBluetoothAdapter == null ) return false; // Device does not support Bluetooth.
 
-		mBluetoothAdapter.disable();
-
 		if( !mBluetoothAdapter.isEnabled() ) {
 			Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 			discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
 
-			mActivity.startActivityForResult(discoverableIntent, 0);
+			mActivity.startActivityForResult(discoverableIntent, BLUETOOTH_ENABLE);
 		}
 		else findingDevices();
-		
+
 		return true;
 	}
 
@@ -77,7 +75,7 @@ public class Bluetooth {
 	 * Use the BluetoothAdapter to find remote Bluetooth devices.
 	 */
 	public void findingDevices() {
-		Log.i("BlueChat", "findingDevices.");
+		Log.i("BlueChat.Bluetooth.findingDevices()", "Recherche lancée.");
 		mBluetoothAdapter.startDiscovery();
 	}
 
@@ -99,6 +97,7 @@ public class Bluetooth {
 			mBluetoothAdapter.cancelDiscovery();
 		}
 		mActivity.unregisterReceiver(mReceiver);
+		mBluetoothAdapter.disable();
 	}
 
 	public void connect() {

@@ -25,6 +25,7 @@ public class MainActivity extends FragmentActivity {
 
 	private final int CHAT = 0;
 	private final int EDIT = 1;
+	private static final int BLUETOOTH_ENABLE = 0;
 
 	private int position = CHAT;
 	private Menu menu = null;
@@ -126,14 +127,15 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-		Log.i("BlueChat.MainActivity", "onActivityResult");
-		
-		if( resultCode == Activity.RESULT_OK ) {
-			Log.i("BlueChat", "Le Bluetooth a été activé.");
-			mBluetooch.findingDevices();
-		}
-		else if( resultCode == Activity.RESULT_CANCELED) {
-			Log.i("BlueChat", "Bluetooth n'a pas été activé.");	
+		if( requestCode == BLUETOOTH_ENABLE ) {
+
+			if( resultCode == Activity.RESULT_CANCELED) {
+				Log.i("BlueChat.MainActivity.onActivityResult()", "Bluetooth n'a pas été activé.");	
+			}
+			else {
+				Log.i("BlueChat.MainActivity.onActivityResult()", "Le Bluetooth a été activé.");
+				mBluetooch.findingDevices();
+			}
 		}
 	}
 
