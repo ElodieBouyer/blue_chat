@@ -9,17 +9,16 @@ import android.bluetooth.BluetoothSocket;
 public class Server extends Thread {
 	
 	private final BluetoothServerSocket mmServerSocket;
-	private static final String SERVICE_NAME = "BLUECHAT_SERVICE";
-	private static final UUID SERVICE_UUID = UUID.fromString("9dbe5b39-11ad-11e4-9191-0800200c9a66");
+	
 	
 	private Bluetooth myBluetooth;
 
-	public Server(Bluetooth bluetooth) {
+	public Server(Bluetooth bluetooth, String name, UUID uuid) {
 		myBluetooth = bluetooth;
 		
 		BluetoothServerSocket tmp = null;
 		try {
-			tmp = myBluetooth.getBluetoothAdapter().listenUsingRfcommWithServiceRecord(SERVICE_NAME, SERVICE_UUID);
+			tmp = myBluetooth.getBluetoothAdapter().listenUsingRfcommWithServiceRecord(name, uuid);
 		} catch (IOException e) { }
 		mmServerSocket = tmp;
 	}

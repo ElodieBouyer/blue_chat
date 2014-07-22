@@ -2,6 +2,7 @@ package fr.project.bluechat.chat;
 
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -16,6 +17,8 @@ import fr.project.bluechat.layout.activity.MainActivity;
 public class Bluetooth {
 
 	private static final int BLUETOOTH_ENABLE = 0;
+	private static final String SERVICE_NAME = "BLUECHAT_SERVICE";
+	private static final UUID SERVICE_UUID = UUID.fromString("9dbe5b39-11ad-11e4-9191-0800200c9a66");
 
 	private MainActivity mActivity;
 	private BluetoothAdapter mBluetoothAdapter;
