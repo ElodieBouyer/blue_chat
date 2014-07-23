@@ -23,12 +23,17 @@ public class Bluetooth {
 	private MainActivity mActivity;
 	private BluetoothAdapter mBluetoothAdapter;
 	private ArrayList<BluetoothDevice> mDevides = new ArrayList<BluetoothDevice>();
+	private Server server;
 
 	private final BroadcastReceiver mReceiver;
 
 	/**
-	 * Bluetooth class constructor.
-	 * @param activity Activity who call the bluetooth.
+	 * Bluetooth class constructor :
+	 *  - get the device's own Bluetooth adapter ;
+	 *  - create a broadcast receiver ;
+	 *  - register the broadcast receiver.
+	 *  
+	 * @param activity Activity who call the Bluetooth.
 	 */
 	public Bluetooth(MainActivity activity) {
 		mActivity = activity;
@@ -40,20 +45,37 @@ public class Bluetooth {
 				String action = intent.getAction();
 
 				// When discovery finds a device
-				if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+				if( BluetoothDevice.ACTION_FOUND.equals(action) ) {
 					BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 					mDevides.add(device);
 					Log.i("BlueChat.Bluetooth.onReceive()", device.getName() + "\n" + device.getAddress());
+					//ParcelUuid[] uuids = device.getUuids();
+					//Log.i("BlueChat.Bluetooth.Bluetooth()", "Nombre d'uuid = "+ uuids.length);
+				}
+
+				// When the discovery started.
+				else if( BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action) ) {
+					Log.i("BlueChat.Bluetooth.findingDevices()", "Recherche lancée.");
+				}
+
+				// When the discovery finished.
+				else if( BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action) ) {
+					Log.i("BlueChat.Bluetooth.onReceive()", "Recherche terminée.");
+					if( !mDevides.isEmpty() ) startServer();
 				}
 			}
 		};
 
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 		mActivity.registerReceiver(mReceiver, filter);
 	}
 
+
 	/**
 	 * Start the Bluetooth.
+	 * 
 	 * @return True if Bluetooth is connect, false otherwise.
 	 */
 	public boolean start() {
@@ -70,17 +92,27 @@ public class Bluetooth {
 		return true;
 	}
 
+
 	/**
-	 * Use the BluetoothAdapter to find remote Bluetooth devices.
+	 * Find remote Bluetooth devices.
 	 */
 	public void findingDevices() {
-		Log.i("BlueChat.Bluetooth.findingDevices()", "Recherche lancée.");
 		mBluetoothAdapter.startDiscovery();
 	}
 
 
+	/**
+	 * Get the Bluetooth adapter.
+	 * 
+	 * @return The Bluetooth adapter.
+	 */
 	public BluetoothAdapter getBluetoothAdapter() {
 		return mBluetoothAdapter;
+	}
+
+
+	public void startServer() {
+		server = new Server(this, SERVICE_NAME, SERVICE_UUID);
 	}
 
 	public void sendMessage(String name, String message){
@@ -96,7 +128,7 @@ public class Bluetooth {
 	 * @param socket Bluetooth socket for the communication.
 	 */
 	public void connect(BluetoothSocket socket) {
-
+		Log.i("BlueChat.Bluetooth.connect()", "Appareil connecté a " + socket.getRemoteDevice().getName());
 	}
 
 	/**
@@ -109,5 +141,6 @@ public class Bluetooth {
 		}
 		mActivity.unregisterReceiver(mReceiver);
 		mBluetoothAdapter.disable();
+		server.cancel();
 	}
 }
