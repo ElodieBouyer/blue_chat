@@ -8,10 +8,14 @@
     <string name="empty_name"> Vous n\'avez pas de pseudo ! \n Ajoutez en un !</string>
     <string name="edit_name"> Vous voulez changer votre pseudo ?</string>
     <string name="new_name"> Nouveau pseudo </string>
+    <string name="error_bluetooth"> Le Bluetooth n\'est pas supporté par votre appareil :(</string>
     <string name="error_name"> Vous devez entrez un pseudo !</string>
     <string name="error_message"> Vous ne pouvez pas envoyer de message vide !</string>
-	<string name="ok_name"> Pseudo enregistré </string>
-	<string name="msg_write"> Entrez votre message </string>
-	<string name="msg_send"> Envoyer le message</string>
-	<string name="msg_sent"> Message envoyé</string>
+    <string name="ok_name"> Pseudo enregistré </string>
+    <string name="msg_write"> Entrez votre message </string>
+    <string name="msg_send"> Envoyer le message</string>
+    <string name="msg_sent"> Message envoyé</string>
+    <string name="wait_discovery_title"> Recherche en cours </string>
+    <string name="wait_discovery_msg0"> personne trouvé </string>
+	<string name="wait_discovery_msg1"> personnes trouvées </string>
 </resources>

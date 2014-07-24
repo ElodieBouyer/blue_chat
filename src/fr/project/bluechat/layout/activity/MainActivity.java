@@ -2,6 +2,7 @@ package fr.project.bluechat.layout.activity;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import fr.project.bluechat.R;
 import fr.project.bluechat.chat.Bluetooth;
 import fr.project.bluechat.layout.fragment.ChatFragment;
 import fr.project.bluechat.layout.fragment.EditFragment;
+import fr.project.bluechat.layout.fragment.ErrorFragment;
 
 public class MainActivity extends FragmentActivity {
 
@@ -25,6 +27,8 @@ public class MainActivity extends FragmentActivity {
 
 	private final int CHAT = 0;
 	private final int EDIT = 1;
+	private final int ERROR = 2;
+
 	private static final int BLUETOOTH_ENABLE = 0;
 
 	private int position = CHAT;
@@ -32,6 +36,8 @@ public class MainActivity extends FragmentActivity {
 	private ChatFragment chatFragment = null;
 	private String userName;
 	private Bluetooth mBluetooch;
+	private ProgressDialog wait;
+	private int nbPeople = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +48,12 @@ public class MainActivity extends FragmentActivity {
 		SharedPreferences settings = getSharedPreferences(NICKNAME, Context.MODE_PRIVATE);
 		String nickname = settings.getString(NICKNAME, new String());
 
-		Log.i("BlueChat", "onCreate");
+		Log.i("BlueChat.MainActivity.onCreate()", "Activity crée.");
 
 		mBluetooch = new Bluetooth(this);
 		mBluetooch.start();
 
-		if (savedInstanceState == null) {
+		if (savedInstanceState == null && position != ERROR ) {
 			if( nickname.isEmpty()  ) { // We open the PseudoFragment.
 				Log.i("BlueChat", "Nickname =" + nickname.length() + ".");
 				openFragmentNickname();
@@ -166,6 +172,27 @@ public class MainActivity extends FragmentActivity {
 		openFragmentChat();
 	}
 
+	public void notSupportBluetooth() {
+		openFragmentError();
+	}
+
+	public void showWait() {
+		String title = getString(R.string.wait_discovery_title);
+		String message = nbPeople + " " + getString(R.string.wait_discovery_msg0);
+		
+		wait = ProgressDialog.show(this, title, message, true);
+	}
+
+	public void updateShowWait() {
+		nbPeople++;
+		Log.i("BlueChat.MainActivity.updateShowWait()", "update");
+		wait.setMessage(nbPeople + getString(R.string.wait_discovery_msg1));
+	}
+
+	public void removeWait() {
+		wait.dismiss();
+	}
+
 	/**
 	 * Called when the user want to send a message.
 	 * @param v Button to send.
@@ -181,6 +208,7 @@ public class MainActivity extends FragmentActivity {
 		}
 		chatFragment.writeUserMessage(userName, message);
 		mBluetooch.sendMessage(userName, message);
+		showWait();
 	}
 
 	/**
@@ -208,12 +236,25 @@ public class MainActivity extends FragmentActivity {
 	 * Open the nickname fragment.
 	 */
 	private void openFragmentNickname() {
-		position = EDIT;
-		Log.i("BlueChat", "openFragmentNickname()");
+		Log.i("BlueChat.MainActivity.openFragmentNickname()", "Ouverture du fragment edit.");
+
+		position = EDIT;	
 		getSupportFragmentManager().beginTransaction()
 		.replace(R.id.container, new EditFragment(userName)).commit();
 		onCreateOptionsMenu(menu);
 	}
 
+
+	/**
+	 * Open the error fragment.
+	 */
+	public void openFragmentError() {
+		Log.i("BlueChat.MainActivity.openFragmentNickname()", "Ouverture du fragment error.");
+
+		position = ERROR;
+		getSupportFragmentManager().beginTransaction()
+		.replace(R.id.container, new ErrorFragment()).commit();
+		onCreateOptionsMenu(menu);
+	}
 
 }
