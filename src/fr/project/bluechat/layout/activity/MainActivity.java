@@ -176,21 +176,18 @@ public class MainActivity extends FragmentActivity {
 		openFragmentError();
 	}
 
-	public void showWait() {
-		String title = getString(R.string.wait_discovery_title);
-		String message = nbPeople + " " + getString(R.string.wait_discovery_msg0);
-		
-		wait = ProgressDialog.show(this, title, message, true);
-	}
-
-	public void updateShowWait() {
+	public void peopleFound(String name) {
 		nbPeople++;
-		Log.i("BlueChat.MainActivity.updateShowWait()", "update");
-		wait.setMessage(nbPeople + getString(R.string.wait_discovery_msg1));
+		Toast toast = Toast.makeText(getApplicationContext(), 
+				name + " " + getString(R.string.wait_discovery_msg0), Toast.LENGTH_SHORT);
+		toast.show();
 	}
 
-	public void removeWait() {
-		wait.dismiss();
+	public void peopleDeconect(String name) {
+		nbPeople--;
+		Toast toast = Toast.makeText(getApplicationContext(), 
+				name + " " + getString(R.string.wait_discovery_msg1), Toast.LENGTH_SHORT);
+		toast.show();
 	}
 
 	/**
@@ -208,7 +205,6 @@ public class MainActivity extends FragmentActivity {
 		}
 		chatFragment.writeUserMessage(userName, message);
 		mBluetooch.sendMessage(userName, message);
-		showWait();
 	}
 
 	/**

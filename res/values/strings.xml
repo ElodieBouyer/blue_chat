@@ -16,6 +16,6 @@
     <string name="msg_send"> Envoyer le message</string>
     <string name="msg_sent"> Message envoyé</string>
     <string name="wait_discovery_title"> Recherche en cours </string>
-    <string name="wait_discovery_msg0"> personne trouvé </string>
-	<string name="wait_discovery_msg1"> personnes trouvées </string>
+    <string name="wait_discovery_msg0"> est connecté(e). </string>
+	<string name="wait_discovery_msg1"> est déconnecté(e). </string>
 </resources>

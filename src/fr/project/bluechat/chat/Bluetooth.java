@@ -51,20 +51,18 @@ public class Bluetooth {
 					Log.i("BlueChat.Bluetooth.onReceive()", device.getName() + "\n" + device.getAddress());
 					//ParcelUuid[] uuids = device.getUuids();
 					//Log.i("BlueChat.Bluetooth.Bluetooth()", "Nombre d'uuid = "+ uuids.length);
-					mActivity.updateShowWait();
+					mActivity.peopleFound(device.getName());
 				}
 
 				// When the discovery started.
 				else if( BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action) ) {
 					Log.i("BlueChat.Bluetooth.onReceive()", "Recherche lancée.");
-					mActivity.showWait();
 				}
 
 				// When the discovery finished.
 				else if( BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action) ) {
 					Log.i("BlueChat.Bluetooth.onReceive()", "Recherche terminée.");
 					//if( !mDevides.isEmpty() ) startServer();
-					mActivity.removeWait();
 				}
 			}
 		};
